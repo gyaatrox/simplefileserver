@@ -10,10 +10,6 @@ server {
         listen       8000;
         server_name  localhost;
 
-        #charset koi8-r;
-
-        #access_log  logs/host.access.log  main;
-
         location / {
 			proxy_pass http://myclient;
         }
