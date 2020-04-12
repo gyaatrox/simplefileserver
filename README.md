@@ -17,7 +17,7 @@ server {
         location / {
 			proxy_pass http://myclient;
         }
-}
+}  
 
 ## derby 数据库
 ```sql 
