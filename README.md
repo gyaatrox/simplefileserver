@@ -1,6 +1,6 @@
 # simplefileserver
 本项目主要使用技术spring boot,nginx,servlet,filter,derby,jetty等技术，server端提供文件的上传、下载、查询等接口，client端使用resttemplate调用这些接口，返回数据在前端展示。
-## nginx 主要配置
+### nginx 主要配置
 ```java 
 upstream myclient{
 	server localhost:9000;
@@ -19,7 +19,7 @@ server {
         }
 }  
 ````
-## derby 数据库
+### derby 数据库
 ```sql 
 CREATE TABLE t_file ( 
 uuid char(64) NOT NULL,
