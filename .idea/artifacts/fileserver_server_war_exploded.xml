@@ -1,0 +1,26 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="fileserver-server:war exploded">
+    <output-path>$PROJECT_DIR$/FileServer/target/fileserver-server</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>fileserver-server</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="fileserver-server" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: error:error:unknown" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/FileServer/target/fileserver-server/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="fileserver-server/web/Web" />
+    </root>
+  </artifact>
+</component>

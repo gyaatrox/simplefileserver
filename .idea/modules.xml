@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SimpleFileServer.iml" filepath="$PROJECT_DIR$/.idea/SimpleFileServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fileserver-client/fileserver-client.iml" filepath="$PROJECT_DIR$/fileserver-client/fileserver-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fileserver-server/fileserver-server.iml" filepath="$PROJECT_DIR$/fileserver-server/fileserver-server.iml" />
+    </modules>
+  </component>
+</project>

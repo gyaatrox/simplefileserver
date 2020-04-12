@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>简单文件服务</title>
+    <link rel="stylesheet" th:href="@{/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+<div class="container">
+    <h1>简单文件服务</h1>
+    <hr>
+    <div>
+        <form action="upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="上传">
+        </form>
+        返回的UUID：<span th:text="${file.uuid}" th:each="file:${fileUploadReturn}">未上传</span>
+    </div>
+    <hr>
+   <div>
+       <form action="get">
+           UUID<input type="text" name="uuid" placeholder="请输入uuid" required>
+           <input type="submit" class="" value="查询">
+       </form>
+        <label>返回的UUID对应的信息</label><br>
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <td>uuid</td>
+                <td>size</td>
+                <td>type</td>
+                <td>originName</td>
+                <td>createTime</td>
+                <td>saveAddress</td>
+                <td>digitEnvelop</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="file:${fileList}">
+                <td th:text="${file.uuid}"></td>
+                <td th:text="${file.size}"></td>
+                <td th:text="${file.type}"></td>
+                <td th:text="${file.originName}"></td>
+                <td style="width: 142px" th:text="${file.createTime}"></td>
+                <td th:text="${file.saveAddress}"></td>
+                <td style="Word-break:break-all;" th:text="${file.digitEnvelop}"></td>
+            </tr>
+            </tbody>
+        </table>
+   </div>
+    <hr>
+    <div>
+        <form action="/download">
+            <input type="text" name="uuid" placeholder="请输入uuid" required>
+            <input type="submit" value="下载">
+        </form>
+    </div>
+    <hr>
+    <div>
+        <form action="list">
+            <input type="hidden" name="count" value="10">
+            <input type="submit" value="查询最近10条上传信息">
+        </form>
+        <lable>最近10条信息</lable><br>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <td>uuid</td>
+                    <td>size</td>
+                    <td>type</td>
+                    <td>originName</td>
+                    <td>createTime</td>
+                    <td>saveAddress</td>
+                    <td>digitEnvelop</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="file:${fileInfoList}">
+                <td th:text="${file.uuid}"></td>
+                <td th:text="${file.size}"></td>
+                <td th:text="${file.type}"></td>
+                <td th:text="${file.originName}"></td>
+                <td style="width: 142px" th:text="${file.createTime}"></td>
+                <td th:text="${file.saveAddress}"></td>
+                <td style="Word-break:break-all;" th:text="${file.digitEnvelop}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/layer/layer.js}"></script>
+<script>
+    //由于性能、跨域等问题弃用ajax方式
+    // function sign(way, method) {
+    //     $.ajax({
+    //         type: "get",
+    //         url: "http://localhost:8000/sign",
+    //         async: false,
+    //         success: function (result) {
+    //             console.log(result);
+    //             $.ajax({
+    //                 headers: {
+    //                     "X-SID": result.sid,
+    //                     "X-signature": result.signature
+    //                 },
+    //                 async: false,
+    //                 type: method,
+    //                 url: "http://localhost:8000/" + way,
+    //                 success: function (res) {
+    //                     console.log(res);
+    //                     //获取UUID
+    //                     layer.msg('上传成功', {time: 3000});
+    //                     $("#uuid" + way).text(res);
+    //                 },
+    //                 error: function () {
+    //                     layer.msg('上传失败', {time: 3000});
+    //                 }
+    //             });
+    //         }
+    //     });
+    // }
+
+    // $("#upload").click(function () {
+    //     $.ajax({
+    //         type:"get",
+    //         url:"http://localhost:8000/sign",
+    //         success:function (result) {
+    //             console.log(result);
+    //             $.ajax({
+    //                 headers:{
+    //                     "X-SID": result.sid,
+    //                     "X-signature":result.signature
+    //                 },
+    //                 type:"post",
+    //                 url:"http://localhost:9000/upload",
+    //                 success:function (res) {
+    //                     console.log(res);
+    //                     //获取UUID
+    //                     layer.msg('上传成功',{time:3000});
+    //                     $("#uuid").text(res);
+    //                 },
+    //                 error:function () {
+    //                     layer.msg('上传失败',{time:3000});
+    //                 }
+    //             });
+    //         }
+    //     });
+    //     // let way = 'upload';
+    //     // let method = 'post';
+    //     // sign(way, method)
+    // });
+    //
+    // $("#get").click(function () {
+    //     $.ajax({
+    //         type:"get",
+    //         url:"http://localhost:8000/sign",
+    //         success:function (result) {
+    //             console.log(result);
+    //             $.ajax({
+    //                 headers:{
+    //                     "X-SID": result.sid,
+    //                     "X-signature":result.signature
+    //                 },
+    //                 data:{"uuid":$("#fileId").val().trim()},
+    //                 type:"get",
+    //                 url:"http://localhost:8000/get",
+    //                 success:function (res) {
+    //                     console.log(res);
+    //                     layer.msg('查询成功',{time:3000});
+    //                     let fileInfo = JSON.parse(res);
+    //                     $("#returnFile").append('<tr> ' +
+    //                         '<td class="tdClass">' + fileInfo.uuid + '</td>' +
+    //                         '<td class="tdClass">' + fileInfo.size + '</td>' +
+    //                         '<td class="tdClass">' + fileInfo.type + '</td>' +
+    //                         '<td class="tdClass">' + fileInfo.originName + '</td>' +
+    //                         '<td class="tdClass">' + fileInfo.createTime + '</td>' +
+    //                         '<td class="tdClass">' + fileInfo.saveAddress + '</td>' +
+    //                         '<td class="tdClass">' + fileInfo.digitEnvelop + '</td>' +
+    //                         '</tr>');
+    //                 },
+    //                 error:function () {
+    //                     layer.msg('查询失败',{time:3000});
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
+    //
+    // $("#download").click(function () {
+    //     $.ajax({
+    //         type:"get",
+    //         url:"http://localhost:8000/sign",
+    //         success:function (result) {
+    //             console.log(result);
+    //             $.ajax({
+    //                 headers:{
+    //                     "X-SID": result.sid,
+    //                     "X-signature":result.signature
+    //                 },
+    //                 type:"get",
+    //                 url:"http://localhost:8000/download",
+    //                 success:function (res) {
+    //                     console.log(res);
+    //                     //获取结果集合
+    //                     layer.msg('下载成功',{time:3000});
+    //                 },
+    //                 error:function () {
+    //                     layer.msg('下载失败',{time:3000});
+    //                 }
+    //             });
+    //         }
+    //     });
+    //     // sign('download', 'get')
+    // });
+    //
+    // $("#list").click(function () {
+    //     $.ajax({
+    //         type:"get",
+    //         url:"http://localhost:8000/sign",
+    //         success:function (result) {
+    //             console.log(result);
+    //             $.ajax({
+    //                 headers:{
+    //                     "X-SID": result.sid,
+    //                     "X-signature":result.signature
+    //                 },
+    //                 data:{"count":$("#count").val().trim()},
+    //                 type:"get",
+    //                 url:"http://localhost:8000/list",
+    //                 success:function (res) {
+    //                     console.log(res);
+    //                     layer.msg('查询成功',{time:3000});
+    //                     $.each(JSON.parse(res), function (index, item) {
+    //                         $("#returnList").append('<tr> ' +
+    //                             '<td class="tdClass">' + item.uuid + '</td>' +
+    //                             '<td class="tdClass">' + item.size + '</td>' +
+    //                             '<td class="tdClass">' + item.type + '</td>' +
+    //                             '<td class="tdClass">' + item.originName + '</td>' +
+    //                             '<td class="tdClass">' + item.createTime + '</td>' +
+    //                             '<td class="tdClass">' + item.saveAddress + '</td>' +
+    //                             '<td class="tdClass">' + item.digitEnvelop + '</td>' +
+    //                             '</tr>');
+    //                     });
+    //                    // $("#returnList").text(typeof JSON.parse(res));
+    //                 },
+    //                 error: function () {
+    //                     layer.msg('查询失败',{time:3000});
+    //                 }
+    //             });
+    //         }
+    //     });
+    //     // sign('list', 'get');
+    // });
+</script>
+</body>
+</html>
