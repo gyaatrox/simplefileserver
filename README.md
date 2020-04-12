@@ -11,20 +11,20 @@ server {
         server_name  localhost;
 
         location / {
-			proxy_pass http://myclient;
+		proxy_pass http://myclient;
         }
 }  
 ````
 ### derby 数据库
 ```sql 
 CREATE TABLE t_file ( 
-uuid char(64) NOT NULL,
-size INTEGER NOT NULL, 
-type varchar(64) NOT NULL, 
-originName varchar(160)  not null, 
-createTime timestamp not null,
-saveAddress varchar(160) not null,
-digitEnvelop varchar(512) not null,
-PRIMARY KEY(uuid )
+	uuid char(64) NOT NULL,
+	size INTEGER NOT NULL, 
+	type varchar(64) NOT NULL, 
+	originName varchar(160)  not null, 
+	createTime timestamp not null,
+	saveAddress varchar(160) not null,
+	digitEnvelop varchar(512) not null,
+	PRIMARY KEY(uuid )
 );
 ```
