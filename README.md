@@ -1,5 +1,5 @@
 # simplefileserver
-本项目主要使用技术spring boot,nginx,servlet,filter,derby,jetty等技术，server端提供文件的上传、下载、查询等接口，client端使用resttemplate调用这些接口，返回数据在前端展示。
+本项目主要使用技术spring boot,nginx,servlet,filter,derby,jetty等技术，使用了aes、rsa加密方式。server端提供文件的上传、下载、查询等接口，client端使用resttemplate，返回数据在前端展示。
 ### nginx 主要配置
 ```java 
 upstream myclient{
